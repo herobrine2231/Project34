@@ -11,7 +11,7 @@ var dogSprite;
 function preload()
 {
   dogImage1=loadImage("images/Dog.png");
-  dogImage2=loadImage("imagesddogImg.png");
+  dogImage2=loadImage("images/dogImg.png");
   dogImage3=loadImage("images/dogImg1.png");
   dogImage4=loadImage("images/happydog.png");
 }
@@ -52,7 +52,7 @@ function draw() {
 }
 
 
-functionreadStock(data)
+function readStock(data)
 {
   foodS=data.val();
 }
