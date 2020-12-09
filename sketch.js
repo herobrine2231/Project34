@@ -46,7 +46,7 @@ function draw() {
   //add styles here
 
   textSize(20);
-  FileList("white");
+  fill("white");
   stroke(10);
   text("Food Stock:" +foodStock, 20,30);
 }
