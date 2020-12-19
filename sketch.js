@@ -8,6 +8,9 @@ var dog, happyDog,database,foodS,foodStock;
 var dogImage1, dogImage2,dogImage3,dogImage4;
 var dogSprite;
 
+var feedPet, addFoods, fedTime,lastFed;
+var foodObj;
+
 function preload()
 {
   dogImage1=loadImage("images/Dog.png");
@@ -27,20 +30,31 @@ function setup() {
   dogSprite.addImage(dogImage1);
   dogSprite.scale=0.2;
 
-  foodStock=database.ref('Food');
-  foodStock.on("value", readStock);
+ // foodStock=database.ref('Food');
+  //foodStock.on("value", readStock);
+
+  foodObj= new Food();
+
+  feedPet= createButton("Feed the dog");
+  feedPet.position(650,95);
+  feedPet.mousePressed(feedDog);
   
+  addFoods=createButton("Add Food");
+  addFoods.position(750,95);
+  addFoods.mousePressed(addFood);
 }
 
 
 function draw() {  
 
   background(46,139,87);
-  if(keyWentDown(UP_ARROW))
+
+  foodObj.display();
+ /* if(keyWentDown(UP_ARROW))
   { 
     writeStock(foodS);
     dogSprite.addImage(dogImage4);
-  }
+  }*/
 
   drawSprites();
   //add styles here
@@ -49,15 +63,57 @@ function draw() {
   fill("white");
   stroke(10);
   text("Food Stock:" +foodStock, 20,30);
+
+  fedTime= database.ref('FeedTime');
+  fedTime.on("value", function(data)
+  {
+    lastFed=data.val();
+  })
+
+  fill(255,255,254);
+  textSize(15);
+  if(lastFed>=12)
+  {
+    text("Last Feed: "+ lastFed%12 + "PM", 350,30)
+  }
+  else if(lastFed==0)
+  {
+    text("Last Feed: 12 AM", 350,30);
+  }
+  else
+  {
+    text("Last Feed: " +lastFed +"AM", 350,30);
+  }
 }
 
+function feedDog()
+{
+  dog.addImage(dogImage4);
 
-function readStock(data)
+  foodObj.updateFoodStock(foodObj.getFoodStock()-1);
+  database.ref('/').update(
+    {
+      Food:foodObj.getFoodStock(),
+      FeedTime:hour()
+    }
+  )
+}
+
+function addFood()
+{
+  foodS++;
+  database.ref('/').update(
+    {
+      Food:foodS
+    }
+  )
+}
+/*function readStock(data)
 {
   foodS=data.val();
-}
+}*/
 
-function writeStock(x)
+/*function writeStock(x)
 {
   if(x<=0)
   {
@@ -67,6 +123,6 @@ function writeStock(x)
     x=x-1;
   }
   database.ref('/').update({Food:x})
-}
+}*/
 
 
