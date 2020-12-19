@@ -59,7 +59,7 @@ function draw() {
   drawSprites();
   //add styles here
 
-  textSize(20);
+  textSize(15);
   fill("white");
   stroke(10);
   text("Food Stock:" +foodStock, 20,30);
@@ -74,15 +74,15 @@ function draw() {
   textSize(15);
   if(lastFed>=12)
   {
-    text("Last Feed: "+ lastFed%12 + "PM", 350,30)
+    text("Last Feed: "+ lastFed%12 + "PM", 300,30)
   }
   else if(lastFed==0)
   {
-    text("Last Feed: 12 AM", 350,30);
+    text("Last Feed: 12 AM", 300,30);
   }
   else
   {
-    text("Last Feed: " +lastFed +"AM", 350,30);
+    text("Last Feed: " +lastFed +"AM", 300,30);
   }
 }
 
